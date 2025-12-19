@@ -13,10 +13,8 @@ This project focuses on real-world queue handling, role-based access, and clear 
 - Cancel appointment before consultation
 
 ### Doctor
-- Register & Login
+- Login
 - View today’s patient queue
-- Start consultation
-- Mark appointment as Completed or Absent
 
 ## Appointment Lifecycle
 
@@ -37,7 +35,6 @@ BOOKED → IN_PROGRESS → COMPLETED
 ## Queue Management Logic
 - Each doctor has a daily queue
 - Queue is ordered using `queueNumber`
-- Only the doctor controls queue progression
 - When an appointment is completed or marked absent:
   - Next patient automatically moves forward
 
@@ -97,6 +94,3 @@ hospital-appointment-system/
 
 ### Doctor APIs
 - `GET /api/doctor/appointments/today` – View today’s queue
-- `PATCH /api/appointments/:id/start` – Start consultation
-- `PATCH /api/appointments/:id/complete` – Complete consultation
-- `PATCH /api/appointments/:id/absent` – Mark absent
