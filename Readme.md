@@ -13,7 +13,7 @@ This project focuses on real-world queue handling, role-based access, and clear 
 - Cancel appointment before consultation
 
 ### Doctor
-- Login
+- Register & Login
 - View today’s patient queue
 - Start consultation
 - Mark appointment as Completed or Absent
