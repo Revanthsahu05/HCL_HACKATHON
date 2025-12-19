@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('token', 'mock-jwt-token');
                 localStorage.setItem('user', JSON.stringify(userData));
                 setUser(userData);
-                resolve({ success: true });
+                resolve({ success: true, user: userData });
             }, 500); // Simulate network delay
         });
     };
