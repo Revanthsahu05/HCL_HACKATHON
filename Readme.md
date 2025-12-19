@@ -41,7 +41,7 @@ BOOKED → IN_PROGRESS → COMPLETED
 - When an appointment is completed or marked absent:
   - Next patient automatically moves forward
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 - React.js
@@ -88,7 +88,11 @@ hospital-appointment-system/
   - Doctor
 - Protected routes on frontend and backend
 
+<<<<<<< HEAD
 ## API Overview
+=======
+##  API Overview
+>>>>>>> 040bc10d5dd3bf560e215390d4ed1f30b0693c1b
 
 ### Patient APIs
 - `POST /api/appointments` – Book appointment
