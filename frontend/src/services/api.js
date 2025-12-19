@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:5000/api/auth', // Pointing to our mock backend
+    baseURL: '/api', // Proxied to http://localhost:5000/api via vite.config.js
 });
 
 // Add a request interceptor to attach the token

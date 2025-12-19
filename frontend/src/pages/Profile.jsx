@@ -134,10 +134,13 @@ const Profile = () => {
                                     >
                                         <option value="">Select Specialization</option>
                                         <option value="General Physician">General Physician</option>
-                                        <option value="Gynecologist">Gynecologist</option>
+                                        <option value="Cardiologist">Cardiologist</option>
                                         <option value="Dermatologist">Dermatologist</option>
-                                        <option value="Pediatrician">Pediatrician</option>
                                         <option value="Neurologist">Neurologist</option>
+                                        <option value="Pediatrician">Pediatrician</option>
+                                        <option value="Orthopedist">Orthopedist</option>
+                                        <option value="Gynecologist">Gynecologist</option>
+                                        <option value="Psychiatrist">Psychiatrist</option>
                                     </select>
                                 </div>
                                 <div>

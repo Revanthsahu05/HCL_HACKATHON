@@ -21,7 +21,7 @@ const HomeRoute = () => {
   const { user, loading } = useAuth();
   if (loading) return <div>Loading...</div>;
   if (user) {
-    if (user.role === 'doctor') return <Navigate to="/doctor-dashboard" />;
+    if (user.role === 'DOCTOR') return <Navigate to="/doctor-dashboard" />;
     return <Navigate to="/patient-dashboard" />;
   }
   return <Home />;
@@ -49,7 +49,7 @@ function App() {
         <Route
           path="/patient-dashboard"
           element={
-            <ProtectedRoute role="patient">
+            <ProtectedRoute role="PATIENT">
               <PatientDashboard />
             </ProtectedRoute>
           }
@@ -57,7 +57,7 @@ function App() {
         <Route
           path="/doctor-dashboard"
           element={
-            <ProtectedRoute role="doctor">
+            <ProtectedRoute role="DOCTOR">
               <DoctorDashboard />
             </ProtectedRoute>
           }
