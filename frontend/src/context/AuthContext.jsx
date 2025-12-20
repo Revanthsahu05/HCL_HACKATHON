@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
+import API from '../services/api';
 
 const AuthContext = createContext();
 
@@ -7,7 +8,6 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check for existing token on load
         const token = localStorage.getItem('token');
         const storedUser = localStorage.getItem('user');
         if (token && storedUser) {
@@ -16,38 +16,41 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    // MOCK LOGIN LOGIC (No API)
     const login = async (email, password) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                let userData;
-                // Simple logic: If email contains 'doctor', make them a doctor
-                if (email.includes('doctor')) {
-                    userData = { id: 'doc1', name: 'Dr. House', email, role: 'doctor' };
-                } else {
-                    userData = { id: 'pat1', name: 'Demo Patient', email, role: 'patient' };
-                }
+        try {
+            const res = await API.post('/auth/login', { email, password });
+            const { token, ...userData } = res.data;
 
-                localStorage.setItem('token', 'mock-jwt-token');
-                localStorage.setItem('user', JSON.stringify(userData));
-                setUser(userData);
-                resolve({ success: true, user: userData });
-            }, 500); // Simulate network delay
-        });
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            setUser(userData);
+            return { success: true };
+        } catch (error) {
+            console.error('Login Error:', error.response?.data?.message || error.message);
+            return { success: false, message: error.response?.data?.message || 'Login failed' };
+        }
     };
 
-    // MOCK REGISTER LOGIC (No API)
-    const register = async (name, email, password) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const userData = { id: 'pat-' + Date.now(), name, email, role: 'patient' };
+    const register = async (name, email, password, role = 'PATIENT', doctorDetails = {}) => {
+        try {
+            const payload = {
+                name,
+                email,
+                password,
+                role,
+                ...doctorDetails
+            };
+            const res = await API.post('/auth/register', payload);
+            const { token, ...userData } = res.data;
 
-                localStorage.setItem('token', 'mock-jwt-token');
-                localStorage.setItem('user', JSON.stringify(userData));
-                setUser(userData);
-                resolve({ success: true });
-            }, 500);
-        });
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            setUser(userData);
+            return { success: true };
+        } catch (error) {
+            console.error('Register Error:', error.response?.data?.message || error.message);
+            return { success: false, message: error.response?.data?.message || 'Registration failed' };
+        }
     };
 
     const logout = () => {
@@ -57,14 +60,17 @@ export const AuthProvider = ({ children }) => {
     };
 
     const updateProfile = async (updatedData) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const newUser = { ...user, ...updatedData };
-                localStorage.setItem('user', JSON.stringify(newUser));
-                setUser(newUser);
-                resolve({ success: true });
-            }, 300);
-        });
+        try {
+            const res = await API.put('/auth/profile', updatedData);
+            const newUser = { ...user, ...res.data }; // Merge current user with response
+
+            localStorage.setItem('user', JSON.stringify(newUser));
+            setUser(newUser);
+            return { success: true };
+        } catch (error) {
+            console.error('Update Profile Error:', error);
+            return { success: false, message: error.response?.data?.message || 'Update failed' };
+        }
     };
 
     return (
